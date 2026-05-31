@@ -1,4 +1,4 @@
-package spring_security_asymmetric_encryption;
+package com.asymmetric;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

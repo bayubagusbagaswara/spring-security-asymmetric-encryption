@@ -1,4 +1,4 @@
-package spring_security_asymmetric_encryption;
+package com.asymmetric;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

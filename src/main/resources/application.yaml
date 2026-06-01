@@ -3,7 +3,7 @@ spring:
     name: spring-security-asymmetric-encryption
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring_app_db
+    url: jdbc:postgresql://localhost:5433/spring_app_db
     username: username
     password: password
     driver-class-name: org.postgresql.Driver
@@ -17,5 +17,11 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
+# these properties need to be well organized across the different ENV
 app:
   security:
+    jwt:
+      access-token-expiration: 86400000 #24 hours for local testing #900000 # 15 minutes
+      refresh-token-expiration: 604800000 # 7 days
+
+    disposable-email: 10minutemail,20minutemail,33mail,5ymail,anonbox,guerrillamail,mailinator,maildrop,mailnesia,moakt,my10minutemail,throwawaymail,trashmail,temp-mail,tempmail,truemail,yopmail

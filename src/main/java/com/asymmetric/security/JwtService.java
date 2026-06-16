@@ -69,7 +69,7 @@ public class JwtService {
                     .parseSignedClaims(token)
                     .getPayload();
         } catch (final JwtException e) {
-            throw new RuntimeException("Invalid token", e);
+            throw new IllegalArgumentException("Invalid token", e);
         }
     }
 

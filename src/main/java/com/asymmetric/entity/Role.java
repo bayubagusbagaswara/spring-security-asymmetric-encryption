@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Role extends BaseEntity{
+public class Role extends BaseEntity {
 
     private String name;
 

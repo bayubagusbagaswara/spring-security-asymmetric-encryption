@@ -1,5 +1,6 @@
 package com.asymmetric.controller;
 
+import com.asymmetric.dto.ApiResponse;
 import com.asymmetric.dto.auth.AuthenticationRequest;
 import com.asymmetric.dto.auth.AuthenticationResponse;
 import com.asymmetric.dto.auth.RefreshRequest;
@@ -22,23 +23,50 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> login(
             @Valid @RequestBody final AuthenticationRequest request) {
-        return ResponseEntity.ok(this.service.login(request));
+
+        final AuthenticationResponse authResponse = this.service.login(request);
+
+        final ApiResponse<AuthenticationResponse> response = ApiResponse.<AuthenticationResponse>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .code("OK")
+                .message("Login successful")
+                .data(authResponse)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(
+    public ResponseEntity<ApiResponse<Void>> register(
             @Valid @RequestBody final RegistrationRequest request) {
+
         this.service.register(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        final ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .httpStatus(HttpStatus.CREATED.value())
+                .code("CREATED")
+                .message("User registered successfully")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<AuthenticationResponse> refresh(
-            @RequestBody
-            final RefreshRequest req) {
-        return ResponseEntity.ok(this.service.refreshToken(req));
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> refresh(
+            @RequestBody final RefreshRequest req) {
+
+        final AuthenticationResponse authResponse = this.service.refreshToken(req);
+
+        final ApiResponse<AuthenticationResponse> response = ApiResponse.<AuthenticationResponse>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .code("OK")
+                .message("Access token refreshed successfully")
+                .data(authResponse)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
 }

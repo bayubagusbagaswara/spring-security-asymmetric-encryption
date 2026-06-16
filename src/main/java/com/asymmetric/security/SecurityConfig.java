@@ -27,12 +27,7 @@ public class SecurityConfig {
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui/**",
-            "/webjars/**",
-            "/swagger-ui.html",
-            "/",
-            "/index.html",
+            "/configuration/security"
     };
 
     private final JwtFilter jwtFilter;
@@ -51,3 +46,5 @@ public class SecurityConfig {
                 .build();
     }
 }
+
+

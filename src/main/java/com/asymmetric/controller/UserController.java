@@ -1,5 +1,6 @@
 package com.asymmetric.controller;
 
+import com.asymmetric.dto.ApiResponse;
 import com.asymmetric.dto.user.ChangePasswordRequest;
 import com.asymmetric.dto.user.ProfileUpdateRequest;
 import com.asymmetric.entity.User;
@@ -7,6 +8,7 @@ import com.asymmetric.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,38 +19,75 @@ public class UserController {
 
     private final UserService service;
 
-    @PatchMapping("/me")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void updateProfile(
+    @PutMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> updateProfile(
             @RequestBody @Valid final ProfileUpdateRequest request,
             final Authentication principal) {
+
         this.service.updateProfileInfo(request, getUserId(principal));
+
+        final ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .code("OK")
+                .message("Profile updated successfully")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/me/password")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void changePassword(
+    public ResponseEntity<ApiResponse<Void>> changePassword(
             @RequestBody @Valid final ChangePasswordRequest request,
             final Authentication principal) {
+
         this.service.changePassword(request, getUserId(principal));
+
+        final ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .code("OK")
+                .message("Password changed successfully")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/me/deactivate")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deactivateAccount(final Authentication principal) {
+    @PutMapping("/me/deactivate")
+    public ResponseEntity<ApiResponse<Void>> deactivateAccount(final Authentication principal) {
         this.service.deactivateAccount(getUserId(principal));
+
+        final ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .code("OK")
+                .message("Account deactivated successfully")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/me/reactivate")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void reactivateAccount(final Authentication principal) {
+    @PutMapping("/me/reactivate")
+    public ResponseEntity<ApiResponse<Void>> reactivateAccount(final Authentication principal) {
         this.service.reactivateAccount(getUserId(principal));
+
+        final ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .code("OK")
+                .message("Account reactivated successfully")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/me")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteAccount(final Authentication principal) {
+    public ResponseEntity<ApiResponse<Void>> deleteAccount(final Authentication principal) {
         this.service.deleteAccount(getUserId(principal));
+
+        final ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .code("OK")
+                .message("Account deleted successfully")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     private String getUserId(final Authentication authentication) {

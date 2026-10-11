@@ -19,7 +19,7 @@ Maka:
 - indeks genap = `a, c`
 - indeks ganjil = `b, d`
 
-- Untuk `cbad`:
+Untuk `cbad`:
 ```bash
 Index : 0 1 2 3
 Char  : c b a d 

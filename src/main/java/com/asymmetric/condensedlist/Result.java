@@ -10,59 +10,40 @@ public class Result {
      * Hanya kemunculan pertama dari setiap nilai
      * yang dipertahankan.
      */
-    public static SinglyLinkedListNode condense(
-            SinglyLinkedListNode head) {
-
-        // Jika list kosong
+    // Head adalah node pertama dari linked list
+    public static SinglyLinkedListNode condense(SinglyLinkedListNode head) {
+        // Cek apakah linked list kosong
         if (head == null) {
+            // jika kosong, maka langsung return null
             return null;
         }
 
-        /*
-         * Menyimpan nilai yang sudah pernah ditemukan.
-         */
-        Set<Integer> seen = new HashSet<>();
+        // HashSet digunakan untuk menyimpan nilai yang sudah pernah ditemukan
+        Set<Integer> seenSet = new HashSet<>();
 
-        // Node pertama selalu dipertahankan
-        seen.add(head.data);
+        // Node pertama selalu dipertahankan, buat acuan
+        // Nilai (data) dari node pertama langsung dimasukkan ke HashSet.
+        seenSet.add(head.data);
 
-        // Pointer untuk traversing linked list
+        // Current digunakan sebagai pointer untuk berjalan di linked list
         SinglyLinkedListNode current = head;
 
-        /*
-         * Kita memeriksa current.next agar lebih mudah
-         * menghapus node duplicate.
-         */
+        // Loop selama masih ada node setelah current
         while (current.next != null) {
-
-            // Jika node berikutnya adalah duplicate
-            if (seen.contains(current.next.data)) {
-
-                /*
-                 * Lewati node duplicate.
-                 *
-                 * Contoh:
-                 *
-                 * 3 -> 4 -> 3 -> 2
-                 *      ^
-                 *    current
-                 *
-                 * Menjadi:
-                 *
-                 * 3 -> 4 -> 2
-                 */
+            // Cek apakah nilai node berikutnya sudah pernah muncul. Cek apakah di Set sudah ada yang pernah muncul
+            if (seenSet.contains(current.next.data)) {
+                // Jika duplicate, maka lewat node tersebut, lanjut ke node berikutnya, dengan cara current.next langsung menunjuk ke node setelah duplicate
                 current.next = current.next.next;
-
             } else {
+                // Jika nilai belum pernah muncul (tidak ada data di Set), maka simpan nilai node berikutnya ke Set
+                seenSet.add(current.next.data);
 
-                // Simpan nilai yang baru ditemukan
-                seen.add(current.next.data);
-
-                // Pindah ke node berikutnya
+                // Lanjut pindah ke node berikutnya
                 current = current.next;
             }
         }
 
+        // Return head dari linked list yang sudah dihapus duplikatnya
         return head;
     }
 }

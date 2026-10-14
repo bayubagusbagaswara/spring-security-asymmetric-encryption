@@ -9,96 +9,74 @@ import java.util.List;
  * - karakter pada indeks genap hanya boleh ditukar dengan indeks genap
  * - karakter indeks ganjil hanya boleh ditukar dengan indeks ganjil
  */
-
 public class Result {
 
-    /*
-     * Complete the 'twins' function below.
-     *
-     * The function is expected to return a STRING_ARRAY.
-     * The function accepts following parameters:
-     *  1. STRING_ARRAY firstString
-     *  2. STRING_ARRAY secondString
-     */
-
-    public static List<String> twins(
-            List<String> firstString,
-            List<String> secondString) {
+    // Method twins adalah method untuk mengecek pasangan twin strings
+    // firstString = list string pertama
+    // secondString = list string kedua
+    public static List<String> twins(List<String> firstString, List<String> secondString) {
 
         // Menyimpan hasil "Yes" atau "No"
-        // untuk setiap pasangan string
         List<String> result = new ArrayList<>();
 
         // Loop setiap pasangan string
         for (int i = 0; i < firstString.size(); i++) {
 
-            String first = firstString.get(i);
-            String second = secondString.get(i);
+            String first = firstString.get(i); // ambil string pertama pada index i
+            String second = secondString.get(i); // ambil string kedua pada index i
 
-            // Jika panjang string berbeda,
-            // kedua string tidak mungkin menjadi twins
+
+            // Cek apakah panjang kedua string berbeda
             if (first.length() != second.length()) {
-                result.add("No");
-                continue;
+                result.add("No"); // Jika berbeda, kedua string pasti bukan twins. Jadi kita cek panjang string dulu
+                continue; // Lanjut ke looping pasangan string berikutnya selanjutnya i+1
             }
 
-            /*
-             * Karena karakter hanya boleh ditukar:
-             * - indeks genap dengan indeks genap
-             * - indeks ganjil dengan indeks ganjil
-             *
-             * Maka kita menghitung frekuensi karakter
-             * pada posisi genap dan ganjil secara terpisah.
-             *
-             * Array ukuran 26 karena karakter hanya a-z.
-             */
-            int[] firstEven = new int[26];
-            int[] firstOdd = new int[26];
+            int[] firstEven = new int[26]; // Frekuensi huruf pada index genap string pertama
+            int[] firstOdd = new int[26]; // Frekuensi huruf pada index ganjil string pertama
+            int[] secondEven = new int[26]; // Frekuensi huruf pada index genap string kedua
+            int[] secondOdd = new int[26]; // Frekuensi huruf pada index ganjil string kedua
 
-            int[] secondEven = new int[26];
-            int[] secondOdd = new int[26];
-
-            // Memeriksa setiap karakter
+            // Memeriksa setiap karakter, loop setiap karakter pada string
             for (int j = 0; j < first.length(); j++) {
 
-                char firstChar = first.charAt(j);
-                char secondChar = second.charAt(j);
+                char firstChar = first.charAt(j); // Ambil karakter string pertama pada index j
+                char secondChar = second.charAt(j); // Ambil karakter string kedua pada index j
 
-                // Jika index genap
+                // Cek apakah index j adalah index genap
                 if (j % 2 == 0) {
-
-                    // Menghitung frekuensi karakter
-                    // contoh 'a' - 'a' = 0
-                    // contoh 'b' - 'a' = 1
                     firstEven[firstChar - 'a']++;
+                    // Hitung frekuensi karakter pada index genap string pertama
+                    // Contoh: 'a' - 'a' = 0
+                    //          'b' - 'a' = 1
+                    //          'c' - 'a' = 2
                     secondEven[secondChar - 'a']++;
-
+                    // Hitung frekuensi karakter pada index genap string kedua
                 } else {
-
-                    // Jika index ganjil
                     firstOdd[firstChar - 'a']++;
+                    // Hitung frekuensi karakter pada index ganjil string pertama
                     secondOdd[secondChar - 'a']++;
+                    // Hitung frekuensi karakter pada index ganjil string kedua
                 }
             }
 
-            /*
-             * Kedua string adalah twins jika:
-             *
-             * 1. Frekuensi karakter di indeks genap sama
-             * 2. Frekuensi karakter di indeks ganjil sama
-             */
-            if (Arrays.equals(firstEven, secondEven)
-                    && Arrays.equals(firstOdd, secondOdd)) {
+            // Membandingkan frekuensi karakter pada index genap
+            boolean evenSame = Arrays.equals(firstEven, secondEven);
 
+            // Membandingkan frekuensi karakter pada index ganjil
+            boolean oddSame = Arrays.equals(firstOdd, secondOdd);
+
+            // Jika kelompok genap dan ganjil sama
+            if (evenSame && oddSame) {
+                // Maka kedua string adalah twins
                 result.add("Yes");
-
-            } else {
-
+            } else { // Jika salah satu kelompok berbeda
+                // Maka kedua string bukan twins
                 result.add("No");
             }
         }
-
         // Mengembalikan semua hasil
         return result;
     }
+
 }
